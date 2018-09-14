@@ -1,10 +1,10 @@
 const admin = require('firebase-admin');
-const serviceAccount = require('./../serviceAccountKey.json');
+const serviceAccount = require(process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH);
 
 try {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: 'https://amo-spa-api.firebaseio.com'
+    databaseURL: process.env.FIREBASE_DATABASE_URL
   });
 } catch (err) {
   if (!/already exists/.test(err.message)) {
