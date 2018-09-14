@@ -1,9 +1,12 @@
 # dependencies
 /node_modules
 
+<<<<<<< HEAD
 #dist
 /dist
 
+=======
+>>>>>>> b33a15d4a9f8ceaa4dc895e9b9be6e220f9f00e7
 # misc
 .DS_Store
 .env
