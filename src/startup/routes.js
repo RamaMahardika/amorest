@@ -1,5 +1,5 @@
 const express = require('express');
-const index   = require('../routes/index.js');
+const index = require('../routes/index.js');
 const content = require('../routes/content');
 const contentChild = require('../routes/content-child');
 const gallery = require('../routes/gallery');

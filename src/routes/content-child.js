@@ -7,12 +7,12 @@ router.get('/:id', (req, res) => {
   const _id = req.params.id;
   const content = db.collection('content_child');
   const ref = content.where('parent', '==', _id);
-  
-  let allContent = [];  
+
+  let allContent = [];
 
   ref.get()
     .then(snapshot => {
-      if(snapshot.empty) {
+      if (snapshot.empty) {
         return res.status(404).send({
           "status": 404,
           "status_respond": "404 Not Found",
