@@ -12,7 +12,13 @@ router.get('/:id', (req, res) => {
 
   ref.get()
     .then(snapshot => {
-      checkData(snapshot)
+      if(snapshot.empty) {
+        return res.status(404).send({
+          "status": 404,
+          "status_respond": "404 Not Found",
+          "message": "Data not found"
+        })
+      }
       snapshot.forEach(doc => {
         allContent.push({
           docId: doc.id,
@@ -29,16 +35,6 @@ router.get('/:id', (req, res) => {
     .catch(err => {
       res.send(`ERR ${err}`);
     });
-
-  function checkData(data) {
-    if(data.empty) {
-      return res.status(404).send({
-        "status": 404,
-        "status_respond": "404 Not Found",
-        "message": "Data not found"
-      })        
-    }
-  }
 
 });
 
