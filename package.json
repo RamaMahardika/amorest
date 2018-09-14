@@ -2,23 +2,11 @@
   "name": "restful-amo",
   "version": "1.0.0",
   "description": "",
-<<<<<<< HEAD
-  "main": "src/index.js",
-  "directories": {
-    "test": "tests"
-  },
-  "scripts": {
-    "start": "nodemon src/index.js --exec babel-node --presets es2015,stage-2",
-    "build": "babel src -d dist --presets es2015,stage-2",
-    "serve": "node dist/index.js",
-    "test": "jest --watchAll"
-=======
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js --exec babel-node --presets es2015,stage-2",
     "build": "babel lib -d dist --presets es2015,stage-2",
     "serve": "node dist/index.js"
->>>>>>> b33a15d4a9f8ceaa4dc895e9b9be6e220f9f00e7
   },
   "keywords": [],
   "author": "",
