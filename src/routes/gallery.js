@@ -1,6 +1,6 @@
 const express = require('express');
-const router = express.Router();
-const db = require('./../models/fb.js');
+const router  = express.Router();
+const db      = require('./../models/fb.js');
 
 router.get('/', (req, res) => {
   let gallery = db.collection('gallery');
@@ -9,7 +9,6 @@ router.get('/', (req, res) => {
 
   gallery.get()
     .then((snapshot) => {
-      checkData(snapshot);
       snapshot.forEach((doc) => {
         allContent.push({
           docId: doc.id,
@@ -26,16 +25,6 @@ router.get('/', (req, res) => {
     .catch(err => {
       res.send(`ERR ${err}`);
     });
-
-  function checkData(data) {
-    if (data.empty) {
-      return res.status(404).send({
-        "status": 404,
-        "status_respond": "404 Not Found",
-        "message": "Data not found"
-      })
-    }
-  }
 });
 
 module.exports = router;
