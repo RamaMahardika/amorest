@@ -1,4 +1,4 @@
-const admin = require('firebase-admin');
+import admin from 'firebase-admin';
 const serviceAccount = require(process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH);
 
 try {
@@ -12,9 +12,6 @@ try {
   }
 }
 
-const db = admin.firestore();
-db.settings({
-  timestampsInSnapshots: true
-});
+const db = firebase.database();
 
 module.exports = db;

@@ -1,10 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const db = require('./../models/fb');
+import { Router } from 'express';
+import { collection } from './../models/fb';
+const router = Router();
 
 router.get('/', (req, res) => {
 
-  const content = db.collection('content');
+  const content = collection('content');
 
   let allContent = [];
 
@@ -36,4 +36,4 @@ router.get('/', (req, res) => {
 
 });
 
-module.exports = router;
+export default router;

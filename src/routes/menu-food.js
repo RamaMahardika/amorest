@@ -1,9 +1,9 @@
-const express   = require('express');
-const router    = express.Router();
-const db        = require('./../models/fb.js');
+import { Router } from 'express';
+import { collection } from './../models/fb.js';
+const router    = Router();
 
 router.get('/', (req, res) => {
-    let menuFood = db.collection('menu-food');
+    let menuFood = collection('menu-food');
 
     let allContent = [];
 
@@ -27,4 +27,4 @@ router.get('/', (req, res) => {
         })
 })
 
-module.exports = router;
+export default router;
