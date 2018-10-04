@@ -1,39 +1,33 @@
-import { Router } from 'express';
-import { collection } from './../models/fb';
-const router = Router();
+import Router from "express";
+import db from "./../models/fb";
 
-router.get('/', (req, res) => {
-
-  const content = collection('content');
-
-  let allContent = [];
-
-  content.get()
-    .then(snapshot => {
-      if (snapshot.empty) {
-        return res.status(404).send({
-          "status": 404,
-          "status_respond": "404 Not Found",
-          "message": "Data not found"
-        })
-      }
-      snapshot.forEach(doc => {
-        allContent.push({
-          docId: doc.id,
-          data: doc.data()
+const Content = Router().get("/", (req, res) => {
+  const content = db.ref("content");
+  content.orderByChild("id").once("value", snap => {
+    if (snap.exists()) {
+      let content = [];
+      snap.forEach(child => {
+        content.push({
+          id: child.val().id,
+          slug: child.key,
+          title: child.val().title,
+          titleDesc: child.val().titleDesc
         });
       });
-      res.status(200).send({
-        "status": 200,
-        "status_respond": "Ok",
-        "message": "Content List",
-        "data": allContent
+      return res.status(200).send({
+        status: 200,
+        status_respond: "Success",
+        body: content
       });
-    })
-    .catch(err => {
-      res.send(`ERR ${err}`);
-    });
-
+    }
+    else {
+      return res.status(404).send({
+        status: 404,
+        status_respond: "Not Found",
+        message: "Content Not Found."
+      });
+    }
+  });
 });
 
-export default router;
+export { Content };

@@ -1,19 +1,29 @@
-const express = require('express');
-const index = require('../routes/index.js');
-const content = require('../routes/content');
-const contentChild = require('../routes/content-child');
-const gallery = require('../routes/gallery');
-const menuFood = require('../routes/menu-food');
-const reviews = require('../routes/reviews');
+import json from 'express';
+import {
+  Home,
+  Content,
+  ContentChildAll,
+  ContentChildList,
+  ContentChildSingle,
+  GalleryAll,
+  GalleryCategory,
+  NotFound
+} from '../routes';
 
-const path = '/api/v1';
+const path = '/' + process.env.API_PATH;
 
-module.exports = function(app) {
-  app.use('/', index);
-  app.use(express.json());
-  app.use(path + '/content', content);
-  app.use(path + '/content-child', contentChild);
-  app.use(path + '/gallery', gallery);
-  app.use(path + '/menu-food', menuFood);
-  app.use(path + '/reviews', reviews);
-}
+export default (app) => {
+  app.use(json());
+  app.use(path + '/', Home);
+  app.use(path + '/content', Content);
+  app.use(path + '/content-child', ContentChildAll);
+  app.use(path + '/content-child', ContentChildList);
+  app.use(path + '/content-child', ContentChildSingle);
+  app.use(path + '/gallery', GalleryAll);
+  app.use(path + '/gallery', GalleryCategory);
+  app.use(path + '/not-found', NotFound);
+  app.use('*', (req, res, next) => {
+    res.redirect(path + '/not-found');
+    next();
+  });
+};
