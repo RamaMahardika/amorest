@@ -1,111 +1,104 @@
-import Router from "express";
-import db from "./../models/fb";
-const content = db.ref("content-child");
+import Router from 'express';
+import db from './../models/fb';
+const ContentChild = db.ref('content-child');
 
-const ContentChildAll = Router().get("/", (req, res) => {
-  content.once("value", snap => {
-    if (snap.exists()) {
-      let ContentAll = [];
-      let ContentKey = [];
-      snap.forEach(content => {
-        let subkey = content.key.split("-");
-        let key = subkey[0];
-        ContentKey.push(key);
-        ContentAll.push({
-          parrent: key,
-          title: content.val().title,
-          titleDesc: content.val().titleDesc,
-          banner: content.val().banner,
-          desc: content.val().desc
-        });
-      });
-      return res.status(200).send({
-        status: 200,
-        status_respond: "Success",
-        body: {
-          content: "All",
-          next: [...new Set(ContentKey)],
-          listing: ContentAll
-        }
-      });
-    } else {
-      return res.status(404).send({
-        status: 404,
-        status_respond: "Not Found",
-        message: `/${req.params}/ This wouldn't work.`
-      });
-    }
-  });
+const ContentChildAll = Router().get('/', (req, res) => {
+	ContentChild.once('value', snap => {
+		if (snap.exists()) {
+			let ContentChildAll = [];
+			let ContentNext = [];
+			snap.forEach(ContentChildItems => {
+				let next = ContentChildItems.key.split('-')[0];
+				let ContentChildItem = ContentChildItems.val();
+				let ContentList = {
+					parrent: next,
+					title: ContentChildItem.title,
+					titleDesc: ContentChildItem.titleDesc,
+					banner: ContentChildItem.banner,
+					desc: ContentChildItem.desc
+				};
+				ContentNext.push(next);
+				ContentChildAll.push(ContentList);
+			});
+			return res.status(200).send({
+				status: 200,
+				status_respond: 'Success',
+				body: {
+					content: 'All',
+					next: [...new Set(ContentNext)],
+					listing: ContentChildAll
+				}
+			});
+		} else {
+			res.redirect(`/${process.env.API_PATH}/not-found/`);
+		}
+	});
 });
 
-const ContentChildList = Router().get("/:parent", (req, res) => {
-  const parent = req.params.parent;
-  content
-    .orderByChild("parent")
-    .equalTo(parent)
-    .once("value", snap => {
-      if (snap.exists()) {
-        let ParentContent = [];
-        let ContentKey = [];
-        snap.forEach(content => {
-          let subkey = content.key;
-          ContentKey.push(subkey.substr(subkey.indexOf("-") + 1));
-          ParentContent.push({
-            title: content.val().title,
-            titleDesc: content.val().titleDesc,
-            banner: content.val().banner,
-            desc: content.val().desc
-          });
-        });
-        return res.status(200).send({
-          status: 200,
-          status_respond: "Success",
-          body: {
-            content: parent.charAt(0).toUpperCase() + parent.slice(1),
-            next: [...new Set(ContentKey)],
-            listing: ParentContent
-          }
-        });
-      } else {
-        return res.status(404).send({
-          status: 404,
-          status_respond: "Not Found",
-          message: `/${parent}/ This wouldn't work.`
-        });
-      }
-    });
+const ContentChildList = Router().get('/:parent', (req, res) => {
+	const parent = req.params.parent;
+	let ParentText = parent.charAt(0).toUpperCase() + parent.slice(1);
+	ContentChild.orderByChild('parent')
+		.equalTo(parent)
+		.once('value', snap => {
+			if (snap.exists()) {
+				let ContentChildLists = [];
+				let ContentNext = [];
+				snap.forEach(ContentChildItems => {
+					let NextKey = ContentChildItems.key;
+					let NextExact = NextKey.substr(NextKey.indexOf('-') + 1);
+					let ContentChildItem = ContentChildItems.val();
+					let ContentList = {
+						title: ContentChildItem.title,
+						titleDesc: ContentChildItem.titleDesc,
+						banner: ContentChildItem.banner,
+						desc: ContentChildItem.desc
+					};
+					ContentNext.push(NextExact);
+					ContentChildLists.push(ContentList);
+				});
+				return res.status(200).send({
+					status: 200,
+					status_respond: 'Success',
+					body: {
+						content: ParentText,
+						next: [...new Set(ContentNext)],
+						listing: ContentChildLists
+					}
+				});
+			} else {
+				res.redirect(`/${process.env.API_PATH}/not-found/`);
+			}
+		});
 });
 
-const ContentChildSingle = Router().get("/:parent/:child", (req, res) => {
-  const parent = req.params.parent;
-  const child = req.params.child;
-  content
-    .orderByKey()
-    .equalTo(parent + "-" + child)
-    .once("value", snap => {
-      if (snap.exists()) {
-        let singleContent = [];
-        snap.forEach(single => {
-          singleContent.push({
-            title: single.val().title,
-            titleDesc: single.val().titleDesc,
-            banner: single.val().banner,
-            desc: single.val().desc
-          });
-        });
-        res.status(200).send({
-          status: 200,
-          status_respond: "Success",
-          body: singleContent
-        });
-      } else {
-        return res.status(404).send({
-          status: 404,
-          status_respond: "Not Found",
-          message: `/${parent + "/" + child} This wouldn't work.`
-        });
-      }
-    });
+const ContentChildSingle = Router().get('/:parent/:child', (req, res) => {
+	const parent = req.params.parent;
+	const child = req.params.child;
+	ContentChild.orderByKey()
+		.equalTo(parent + '-' + child)
+		.once('value', snap => {
+			if (snap.exists()) {
+				let ContentChildSingle = [];
+				snap.forEach(ContentChildItems => {
+					let ContentChildItem = ContentChildItems.val();
+					let ContentList = {
+						title: ContentChildItem.title,
+						titleDesc: ContentChildItem.titleDesc,
+						banner: ContentChildItem.banner,
+						desc: ContentChildItem.desc
+					};
+					ContentChildSingle.push(ContentList);
+				});
+				res.status(200).send({
+					status: 200,
+					status_respond: 'Success',
+					body: ContentChildSingle
+				});
+			} else {
+				res.redirect(`/${process.env.API_PATH}/not-found/`);
+			}
+		});
 });
 
 export { ContentChildAll, ContentChildList, ContentChildSingle };

@@ -5,22 +5,23 @@ const Content = Router().get("/", (req, res) => {
   const content = db.ref("content");
   content.orderByChild("id").once("value", snap => {
     if (snap.exists()) {
-      let content = [];
-      snap.forEach(child => {
-        content.push({
-          id: child.val().id,
-          slug: child.key,
-          title: child.val().title,
-          titleDesc: child.val().titleDesc
-        });
+      let contents = [];
+      snap.forEach(ContentItems => {
+        let ContentItem = ContentItems.val();
+        let ContentList = {
+          id: ContentItem.id,
+          slug: ContentItems.key,
+          title: ContentItem.title,
+          titleDesc: ContentItem.titleDesc
+        };
+        contents.push(ContentList);
       });
       return res.status(200).send({
         status: 200,
         status_respond: "Success",
-        body: content
+        body: contents
       });
-    }
-    else {
+    } else {
       return res.status(404).send({
         status: 404,
         status_respond: "Not Found",

@@ -5,6 +5,7 @@
 .history
 .DS_Store
 .env
+.vscode
 npm-debug.log*
 
 # secret

@@ -4,7 +4,7 @@ const Home = Router().get("/", (req, res) => {
   res.status(200).send({
     status: 200,
     status_respond: "Ok",
-    message: "Welcome to amo rest api",
+    message: "Welcome to Amo SPA Restful Api.",
   });
 });
 
