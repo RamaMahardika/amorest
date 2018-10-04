@@ -2,8 +2,10 @@
 /node_modules
 
 # misc
+.history
 .DS_Store
 .env
+.vscode
 npm-debug.log*
 
 # secret

@@ -1,39 +1,34 @@
-const express = require('express');
-const router = express.Router();
-const db = require('./../models/fb');
+import Router from "express";
+import db from "./../models/fb";
 
-router.get('/', (req, res) => {
-
-  const content = db.collection('content');
-
-  let allContent = [];
-
-  content.get()
-    .then(snapshot => {
-      if (snapshot.empty) {
-        return res.status(404).send({
-          "status": 404,
-          "status_respond": "404 Not Found",
-          "message": "Data not found"
-        })
-      }
-      snapshot.forEach(doc => {
-        allContent.push({
-          docId: doc.id,
-          data: doc.data()
-        });
+const Content = Router().get("/", (req, res) => {
+  const content = db.ref("content");
+  content.orderByChild("id").once("value", snap => {
+    if (snap.exists()) {
+      let contents = [];
+      snap.forEach(ContentItems => {
+        let ContentItem = ContentItems.val();
+        let ContentList = {
+          id: ContentItem.id,
+          slug: ContentItems.key,
+          title: ContentItem.title,
+          titleDesc: ContentItem.titleDesc
+        };
+        contents.push(ContentList);
       });
-      res.status(200).send({
-        "status": 200,
-        "status_respond": "Ok",
-        "message": "Content List",
-        "data": allContent
+      return res.status(200).send({
+        status: 200,
+        status_respond: "Success",
+        body: contents
       });
-    })
-    .catch(err => {
-      res.send(`ERR ${err}`);
-    });
-
+    } else {
+      return res.status(404).send({
+        status: 404,
+        status_respond: "Not Found",
+        message: "Content Not Found."
+      });
+    }
+  });
 });
 
-module.exports = router;
+export { Content };
