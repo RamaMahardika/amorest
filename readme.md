@@ -5,7 +5,7 @@
 - Run git clone
 `git clone --single-branch -b docs https://github.com/RamaMahardika/amorest.git`
 
-- Install docsify
+- Install docsify globaly
 `npm i docsify -g`
 
 - Select amorest directory
