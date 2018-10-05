@@ -1,12 +1,10 @@
 ## Welcome Developers!
 
-> This is an _PUBLIC API_ services provided by Webfeat Team.
+> Welcome to _AMO SPA API_.
 
-> This services will allow you to read our resources from the server.
+> This services will allow you to return resources from our server.
 
-You can **read only** the data,
-
-If you need auth key to request _CRUD_ access, please contact our **Server Administrator**.
+You can **read only** the data.
 
 We will allow you to access our **read only** data bellow:
 
@@ -19,12 +17,10 @@ We will allow you to access our **read only** data bellow:
 - Gift
 - Other Details
 
-We also provide you a message for the app such as:
-
-- Error Message
-- Callback Message
-- Success Massage
+[Next Section](/what-to-do)
 
 AMO SPA Restful API version _1.0.1_
+
+Provided by **Webfeat Team**
 
 ---

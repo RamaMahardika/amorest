@@ -1,8 +1,9 @@
-* Getting started
+- Getting started
 
-  * [What to do](what-to-do.md)
+  - [What to do](what-to-do.md)
 
-* Resources
+- Resources
 
-  * [Content](content.md)
-  * [Single Content](single-content.md)
+  - [Content Category](content-category.md)
+  - [Content Listing](content-listing.md)
+  - [Errors](errors.md)
