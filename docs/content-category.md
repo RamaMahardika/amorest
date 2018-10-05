@@ -35,14 +35,14 @@
 
 #### Base {docsify-ignore}
 
-| Property                 | Type     | Description                     |
-| ------------------------ | -------- | ------------------------------- |
-| status                   | `Number` | Status code                     |
-| status_respond           | `String` | Status respond                  |
-| body                     | `Array`  | Content category output data    |
-| body [`Object`] id       | `String` | Order by id generated on server |
-| body [`Object`] hasChild | `Boelan` | Option for content listing      |
-| body [`Object`] title    | `String` | Content category title          |
+| Property                 | Type      | Description                     |
+| ------------------------ | --------- | ------------------------------- |
+| status                   | `Number`  | Status code                     |
+| status_respond           | `String`  | Status respond                  |
+| body                     | `Array`   | Content category output data    |
+| body [`Object`] id       | `String`  | Order by id generated on server |
+| body [`Object`] hasChild | `Boolean` | Option for content listing      |
+| body [`Object`] title    | `String`  | Content category title          |
 
 <div style="
 	margin-bottom:350px;
