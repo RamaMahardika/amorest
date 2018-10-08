@@ -1,6 +1,6 @@
 # Content Child
 
-> Parameter for retrieve all content listing data.
+> Parameter for retrieve all content listing data. 
 
 ## Resources
 
